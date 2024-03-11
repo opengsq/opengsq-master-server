@@ -11,7 +11,6 @@ threads: dict[str, Thread] = {}
 
 def run_threaded(master_server: MasterServer):
     if master_server.key not in threads or not threads[master_server.key].is_alive():
-        print(f"Running job for master server: {master_server.key}")
         threads[master_server.key] = Thread(target=master_server.job)
         threads[master_server.key].start()
 
