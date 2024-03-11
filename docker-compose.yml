@@ -11,6 +11,7 @@ services:
       - .env
     ports:
       - ${PORT}:8000
+    restart: always
 
   schedule:
     build: .
@@ -18,3 +19,4 @@ services:
     container_name: opengsq-master-server-schedule
     env_file:
       - .env
+    restart: always
