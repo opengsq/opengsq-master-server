@@ -126,6 +126,9 @@ class Palworld(MasterServer):
         result = self.collection.delete_many(
             {'_last_modified': {'$lt': time_ago}})
 
+        # Print the count of deleted documents
+        print(f"Deleted {result.deleted_count} documents that haven't been updated for {minutes} minutes.")
+
         return result
 
 
