@@ -14,7 +14,7 @@ services:
 
   schedule:
     build: .
-    command: python main.py
+    command: python -u main.py
     container_name: opengsq-master-server-schedule
     env_file:
       - .env
