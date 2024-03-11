@@ -1,13 +1,16 @@
 from flask import Flask, abort, request, jsonify
+
+from MasterServer import MasterServer
+
+from Factorio import Factorio
 from Palworld import Palworld
 
 app = Flask(__name__)
 
 
-@app.route('/palworld/search', methods=['GET'])
-def palworld_search():
-    host = request.args.get('host')
-    port = request.args.get('port')
+def search(args: dict, master_server: MasterServer):
+    host = args.get('host')
+    port = args.get('port')
 
     # Check if host and port are provided
     if not host or not port:
@@ -18,13 +21,23 @@ def palworld_search():
     except ValueError:
         abort(400, description="'port' must be an integer.")
 
-    result = Palworld().find(host=host, port=port)
+    result = master_server.find(host=host, port=port)
 
     # Check if result is found
     if not result:
         abort(404, description="No result found.")
 
     return jsonify(result)
+
+
+@app.route('/factorio/search', methods=['GET'])
+def factorio_search():
+    return search(request.args, Factorio())
+
+
+@app.route('/palworld/search', methods=['GET'])
+def palworld_search():
+    return search(request.args, Palworld())
 
 
 if __name__ == '__main__':

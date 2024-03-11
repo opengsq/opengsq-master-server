@@ -1,7 +1,5 @@
-import os
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
-from datetime import datetime, timedelta, timezone
-import time
+from datetime import datetime, timezone
 from pymongo import UpdateOne
 from tqdm import tqdm
 import requests
@@ -11,18 +9,11 @@ from MasterServer import MasterServer
 
 class Palworld(MasterServer):
     def __init__(self) -> None:
-        super().__init__()
-        self._key = 'Palworld'
-        self.db = self.client['MasterServer']
-        self.collection = self.db['PalWorld']
+        super().__init__('Palworld')
         self.collection.create_index('server_id')
         self.collection.create_index({'address': 1, 'port': 1})
 
     def job(self):
-        # Record the start time
-        start_time = time.time()
-        print(f"Running job: {self.key}")
-
         # Fetch data until empty
         servers = self._fetch_until_empty()
 
@@ -31,10 +22,6 @@ class Palworld(MasterServer):
 
         # Remove old documents (assuming this method exists)
         self._remove_old_documents(minutes=30)
-
-        # Calculate elapsed time
-        elapsed_time = time.time() - start_time
-        print(f"Job done: {self.key}. Time elapsed: {elapsed_time:.2f} seconds")
 
     def find(self, *, host: str, port: int):
         # Define the query to find documents with a specific address and port
@@ -50,7 +37,7 @@ class Palworld(MasterServer):
 
     def _fetch_page(self, page: int) -> list:
         url = f"https://api.palworldgame.com/server/list?page={page}"
-        response = requests.get(url)
+        response = requests.get(url, timeout=15)
         response.raise_for_status()
         data = response.json()
         return data['server_list']
@@ -69,25 +56,7 @@ class Palworld(MasterServer):
             )
             for server in server_list
         ]
-
-        # Chunk size for bulk write
-        max_workers = min(32, os.cpu_count() + 4)
-        chunk_size = -(-len(updates) // max_workers)
-
-        # Split the updates into chunks
-        update_chunks = [updates[i:i + chunk_size]
-                         for i in range(0, len(updates), chunk_size)]
-
-        pbar = tqdm(total=len(updates), desc="Bulk Write")
-
-        def perform_bulk_write(i: int):
-            self.collection.bulk_write(update_chunks[i], ordered=False)
-            pbar.update(len(update_chunks[i]))
-
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            results = executor.map(perform_bulk_write, range(max_workers))
-
-        return results
+        return self._bulk_write(updates)
 
     def _fetch_until_empty(self):
         servers = []
@@ -118,22 +87,9 @@ class Palworld(MasterServer):
 
         return servers
 
-    def _remove_old_documents(self, minutes: int):
-        # Calculate the time 'minutes' ago
-        time_ago = datetime.now(timezone.utc) - timedelta(minutes=minutes)
-
-        # Remove documents that haven't been updated for 'minutes'
-        result = self.collection.delete_many(
-            {'_last_modified': {'$lt': time_ago}})
-
-        # Print the count of deleted documents
-        print(f"Deleted {result.deleted_count} documents that haven't been updated for {minutes} minutes.")
-
-        return result
-
 
 if __name__ == "__main__":
     palword = Palworld()
-    palword.run()
+    # palword.job()
     server = palword.find(host='104.192.227.52', port=8211)
     print(server)
