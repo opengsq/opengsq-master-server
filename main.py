@@ -3,6 +3,8 @@ import time
 import schedule
 
 from MasterServer import MasterServer
+
+from BeamMP import BeamMP
 from Factorio import Factorio
 from Palworld import Palworld
 
@@ -15,6 +17,7 @@ def run_threaded(master_server: MasterServer):
         threads[master_server.key].start()
 
 
+schedule.every(5).minutes.do(run_threaded, BeamMP())
 schedule.every(5).minutes.do(run_threaded, Factorio())
 schedule.every(5).minutes.do(run_threaded, Palworld())
 

@@ -2,6 +2,7 @@ from flask import Flask, abort, request, jsonify
 
 from MasterServer import MasterServer
 
+from BeamMP import BeamMP
 from Factorio import Factorio
 from Palworld import Palworld
 
@@ -28,6 +29,11 @@ def search(args: dict, master_server: MasterServer):
         abort(404, description="No result found.")
 
     return jsonify(result)
+
+
+@app.route('/beammp/search', methods=['GET'])
+def beammp_search():
+    return search(request.args, BeamMP())
 
 
 @app.route('/factorio/search', methods=['GET'])
