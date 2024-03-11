@@ -78,12 +78,14 @@ class Palworld(MasterServer):
         update_chunks = [updates[i:i + chunk_size]
                          for i in range(0, len(updates), chunk_size)]
 
+        pbar = tqdm(total=len(updates), desc="Bulk Write")
+
         def perform_bulk_write(i: int):
             self.collection.bulk_write(update_chunks[i], ordered=False)
+            pbar.update(len(update_chunks[i]))
 
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            results = list(tqdm(executor.map(perform_bulk_write, range(
-                max_workers)), total=len(update_chunks), desc="Bulk Write"))
+            results = executor.map(perform_bulk_write, range(max_workers))
 
         return results
 
