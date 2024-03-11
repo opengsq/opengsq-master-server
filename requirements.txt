@@ -1,0 +1,10 @@
+certifi==2024.2.2
+charset-normalizer==3.3.2
+colorama==0.4.6
+dnspython==2.6.1
+idna==3.6
+pymongo==4.6.2
+python-dotenv==1.0.1
+requests==2.31.0
+tqdm==4.66.2
+urllib3==2.2.1
