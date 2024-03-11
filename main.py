@@ -15,7 +15,7 @@ def run_threaded(master_server: MasterServer):
         threads[master_server.key].start()
 
 
-schedule.every(10).minutes.do(run_threaded, Palworld())
+schedule.every(5).minutes.do(run_threaded, Palworld())
 
 for job in schedule.get_jobs():
     print(f"Job: {job}, Next run: {job.next_run}, Period: {job.period}")
