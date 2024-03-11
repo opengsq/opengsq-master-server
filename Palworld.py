@@ -1,6 +1,7 @@
 import os
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from datetime import datetime, timedelta, timezone
+import time
 from pymongo import UpdateOne
 from tqdm import tqdm
 import requests
@@ -18,9 +19,22 @@ class Palworld(MasterServer):
         self.collection.create_index({'address': 1, 'port': 1})
 
     def job(self):
+        # Record the start time
+        start_time = time.time()
+        print(f"Running job: {self.key}")
+
+        # Fetch data until empty
         servers = self._fetch_until_empty()
+
+        # Perform bulk write (upsert) operation
         self._upsert_bulk_write(servers)
+
+        # Remove old documents (assuming this method exists)
         self._remove_old_documents(minutes=30)
+
+        # Calculate elapsed time
+        elapsed_time = time.time() - start_time
+        print(f"Job done: {self.key}. Time elapsed: {elapsed_time:.2f} seconds")
 
     def find(self, *, host: str, port: int):
         # Define the query to find documents with a specific address and port
