@@ -34,7 +34,7 @@ class Factorio(MasterServer):
         return result
 
     def _fetch(self) -> list:
-        username, token = os.getenv("FACTORIO_USERNAME")
+        username = os.getenv("FACTORIO_USERNAME")
         token = os.getenv("FACTORIO_TOKEN")
         url = f"https://multiplayer.factorio.com/get-games?username={username}&token={token}"
         data = self._fetch_url(url)
