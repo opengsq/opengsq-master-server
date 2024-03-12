@@ -61,7 +61,7 @@ class Palworld(MasterServer):
     def _fetch_until_empty(self):
         servers = []
         stop = False
-        pbar = tqdm(total=0)
+        pbar = tqdm(total=0, desc=f'[{self.key}] Fetch Page')
 
         with ThreadPoolExecutor() as executor:
             futures = {executor.submit(self._fetch_page, pbar.total + 1)}
@@ -79,7 +79,6 @@ class Palworld(MasterServer):
                         stop = True
 
                     if not stop:
-                        pbar.set_description(f'Page {pbar.total + 1}')
                         pbar.total += 1
                         pbar.refresh()
                         futures.add(executor.submit(

@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 from pymongo import UpdateOne
-import requests
 
 from MasterServer import MasterServer
 
@@ -12,7 +11,7 @@ class BeamMP(MasterServer):
 
     def job(self):
         # Fetch data until empty
-        servers = self._fetch()
+        servers = self._fetch_url('https://backend.beammp.com/servers-info')
 
         # Perform bulk write (upsert) operation
         self._upsert_bulk_write(servers)
@@ -31,13 +30,6 @@ class BeamMP(MasterServer):
         result = self.collection.find_one(query, projection)
 
         return result
-
-    def _fetch(self) -> list:
-        url = "https://backend.beammp.com/servers-info"
-        response = requests.get(url, timeout=15)
-        response.raise_for_status()
-        data = response.json()
-        return data
 
     def _upsert_bulk_write(self, server_list: list):
         # Prepare the updates

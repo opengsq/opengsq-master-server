@@ -1,7 +1,6 @@
 import os
 from datetime import datetime, timezone
 from pymongo import UpdateOne
-import requests
 
 from MasterServer import MasterServer
 
@@ -38,10 +37,7 @@ class Factorio(MasterServer):
         username, token = os.getenv("FACTORIO_USERNAME")
         token = os.getenv("FACTORIO_TOKEN")
         url = f"https://multiplayer.factorio.com/get-games?username={username}&token={token}"
-
-        response = requests.get(url, timeout=15)
-        response.raise_for_status()
-        data = response.json()
+        data = self._fetch_url(url)
 
         if "message" in data:
             # Possible error messages

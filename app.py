@@ -5,6 +5,7 @@ from MasterServer import MasterServer
 from BeamMP import BeamMP
 from Factorio import Factorio
 from Palworld import Palworld
+from Scum import Scum
 
 app = Flask(__name__)
 
@@ -44,6 +45,11 @@ def factorio_search():
 @app.route('/palworld/search', methods=['GET'])
 def palworld_search():
     return search(request.args, Palworld())
+
+
+@app.route('/scum/search', methods=['GET'])
+def scum_search():
+    return search(request.args, Scum())
 
 
 if __name__ == '__main__':

@@ -7,6 +7,7 @@ from MasterServer import MasterServer
 from BeamMP import BeamMP
 from Factorio import Factorio
 from Palworld import Palworld
+from Scum import Scum
 
 threads: dict[str, Thread] = {}
 
@@ -20,6 +21,8 @@ def run_threaded(master_server: MasterServer):
 schedule.every(5).minutes.do(run_threaded, BeamMP())
 schedule.every(5).minutes.do(run_threaded, Factorio())
 schedule.every(5).minutes.do(run_threaded, Palworld())
+schedule.every(5).minutes.do(run_threaded, Palworld())
+schedule.every(5).minutes.do(run_threaded, Scum())
 
 for job in schedule.get_jobs():
     print(f"Job: {job}, Next run: {job.next_run}, Period: {job.period}")
