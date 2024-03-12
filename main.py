@@ -25,6 +25,7 @@ schedule.every(5).minutes.do(run_threaded, Palworld())
 schedule.every(5).minutes.do(run_threaded, Scum())
 
 for job in schedule.get_jobs():
+    job.run()
     print(f"Job: {job}, Next run: {job.next_run}, Period: {job.period}")
 
 while 1:
