@@ -15,7 +15,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: discordgsm/discord-game-server-monitor
+  IMAGE_NAME: opengsq/opengsq-master-server
 
 jobs:
   build-and-push-image:
