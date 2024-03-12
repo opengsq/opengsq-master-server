@@ -18,14 +18,12 @@ def run_threaded(master_server: MasterServer):
         threads[master_server.key].start()
 
 
-schedule.every(5).minutes.do(run_threaded, BeamMP())
-schedule.every(5).minutes.do(run_threaded, Factorio())
-schedule.every(5).minutes.do(run_threaded, Palworld())
-schedule.every(5).minutes.do(run_threaded, Palworld())
-schedule.every(5).minutes.do(run_threaded, Scum())
+schedule.every(5).minutes.do(run_threaded, BeamMP()).run()
+schedule.every(5).minutes.do(run_threaded, Factorio()).run()
+schedule.every(5).minutes.do(run_threaded, Palworld()).run()
+schedule.every(5).minutes.do(run_threaded, Scum()).run()
 
 for job in schedule.get_jobs():
-    job.run()
     print(f"Job: {job}, Next run: {job.next_run}, Period: {job.period}")
 
 while 1:
