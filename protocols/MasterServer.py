@@ -15,10 +15,15 @@ load_dotenv()
 class MasterServer(ABC):
     def __init__(self, key: str) -> None:
         self._key = key
-        uri = os.getenv('DATABASE_URL')
-        self.client = MongoClient(uri)
-        self.db = self.client['MasterServer']
+        self.db = self.get_db()
         self.collection = self.db[key]
+
+    @staticmethod
+    def get_db():
+        uri = os.getenv('DATABASE_URL')
+        client = MongoClient(uri)
+        db = client['MasterServer']
+        return db
 
     @property
     def key(self):
@@ -29,7 +34,7 @@ class MasterServer(ABC):
         pass
 
     @abstractmethod
-    def find(self, *, host: str, port: int):
+    def find(self, *, host: str, port: int) -> dict:
         pass
 
     def run(self):

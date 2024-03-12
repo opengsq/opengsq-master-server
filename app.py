@@ -175,5 +175,28 @@ def render_terms():
     return html_content
 
 
+@app.route("/stats")
+def render_stats():
+    """
+    Statistics Requests
+    ---
+    tags:
+      - Statistics Endpoint
+    responses:
+      200:
+        description: Success
+    """
+    db = MasterServer.get_db()
+
+    # Get a list of collection names in the database
+    collection_names = db.list_collection_names()
+
+    # Create a dictionary to store collection counts
+    collection_counts = {
+        name.lower(): db[name].count_documents({}) for name in collection_names}
+
+    return collection_counts
+
+
 if __name__ == '__main__':
     app.run(debug=True)
