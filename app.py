@@ -179,6 +179,7 @@ def render_terms():
 def render_stats():
     """
     Statistics Requests
+    This endpoint allows you to retrieve the count of servers for each server type.
     ---
     tags:
       - Statistics Endpoint
