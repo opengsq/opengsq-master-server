@@ -98,6 +98,6 @@ class MasterServer(ABC):
             {'_last_modified': {'$lt': time_ago}})
 
         # Print the count of deleted documents
-        print(f"Deleted {result.deleted_count} documents that haven't been updated for {minutes} minutes.")
+        print(f"[{self.key}] Deleted {result.deleted_count} servers that haven't been updated for {minutes} minutes.")
 
         return result
