@@ -22,3 +22,7 @@ The application will return a 400 error if the 'host' and 'port' parameters are 
 ## License
 
 This project is licensed under the MIT License.
+
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/opengsq/opengsq-master-server.svg?variant=adaptive)](https://starchart.cc/opengsq/opengsq-master-server)
