@@ -1,11 +1,6 @@
 from flask import Flask, abort, request, jsonify
 
-from MasterServer import MasterServer
-
-from BeamMP import BeamMP
-from Factorio import Factorio
-from Palworld import Palworld
-from Scum import Scum
+from protocols import MasterServer, BeamMP, Factorio, Palworld, Scum
 
 app = Flask(__name__)
 

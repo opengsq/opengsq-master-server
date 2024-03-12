@@ -4,7 +4,7 @@ from pymongo import UpdateOne
 from tqdm import tqdm
 import requests
 
-from MasterServer import MasterServer
+from protocols.MasterServer import MasterServer
 
 
 class Palworld(MasterServer):

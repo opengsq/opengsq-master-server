@@ -2,12 +2,7 @@ from threading import Thread
 import time
 import schedule
 
-from MasterServer import MasterServer
-
-from BeamMP import BeamMP
-from Factorio import Factorio
-from Palworld import Palworld
-from Scum import Scum
+from protocols import MasterServer, BeamMP, Factorio, Palworld, Scum
 
 threads: dict[str, Thread] = {}
 

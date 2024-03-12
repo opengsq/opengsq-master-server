@@ -1,17 +1,19 @@
+import os
 from datetime import datetime, timezone
 from pymongo import UpdateOne
 
-from MasterServer import MasterServer
+from protocols.MasterServer import MasterServer
 
 
-class BeamMP(MasterServer):
+class Factorio(MasterServer):
     def __init__(self) -> None:
-        super().__init__('BeamMP')
-        self.collection.create_index({'ip': 1, 'port': 1})
+        super().__init__('Factorio')
+        self.collection.create_index('server_id')
+        self.collection.create_index('host_address')
 
     def job(self):
         # Fetch data until empty
-        servers = self._fetch_url('https://backend.beammp.com/servers-info')
+        servers = self._fetch()
 
         # Perform bulk write (upsert) operation
         self._upsert_bulk_write(servers)
@@ -21,7 +23,7 @@ class BeamMP(MasterServer):
 
     def find(self, *, host: str, port: int):
         # Define the query to find documents with a specific address and port
-        query = {'ip': host, 'port': str(port)}
+        query = {'host_address': f'{host}:{port}'}
 
         # Specify the projection to exclude certain fields
         projection = {'_id': 0, '_created_at': 0, '_last_modified': 0}
@@ -31,11 +33,25 @@ class BeamMP(MasterServer):
 
         return result
 
+    def _fetch(self) -> list:
+        username = os.getenv("FACTORIO_USERNAME")
+        token = os.getenv("FACTORIO_TOKEN")
+        url = f"https://multiplayer.factorio.com/get-games?username={username}&token={token}"
+        data = self._fetch_url(url)
+
+        if "message" in data:
+            # Possible error messages
+            # 1. User not found.        -> Invalid FACTORIO_USERNAME
+            # 2. Token doesn't match.   -> Invalid FACTORIO_TOKEN
+            raise LookupError(data["message"])
+
+        return data
+
     def _upsert_bulk_write(self, server_list: list):
         # Prepare the updates
         updates = [
             UpdateOne(
-                {'ip': server['ip'], 'port': server['port']},
+                {'server_id': server['server_id']},
                 {
                     '$set': server,
                     '$currentDate': {'_last_modified': True},
@@ -49,7 +65,7 @@ class BeamMP(MasterServer):
 
 
 if __name__ == "__main__":
-    beamMP = BeamMP()
-    # beamMP.job()
-    server = beamMP.find(host='91.233.187.44', port=30815)
+    factorio = Factorio()
+    # factorio.job()
+    server = factorio.find(host='176.93.252.86', port=24609)
     print(server)

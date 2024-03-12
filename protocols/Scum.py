@@ -4,7 +4,7 @@ import struct
 from pymongo import UpdateOne
 from tqdm import tqdm
 
-from MasterServer import MasterServer
+from protocols.MasterServer import MasterServer
 
 
 class Scum(MasterServer):
