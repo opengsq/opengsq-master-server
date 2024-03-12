@@ -35,14 +35,13 @@ class MasterServer(ABC):
     def run(self):
         # Record the start time
         start_time = time.time()
-        print(f"Running job: {self.key}")
 
         # Run job
         self.job()
 
         # Calculate elapsed time
         elapsed_time = time.time() - start_time
-        print(f"Job done: {self.key}. Time elapsed: {elapsed_time:.2f} seconds")
+        print(f"[{self.key}] Job done. Time elapsed: {elapsed_time:.2f} seconds")
 
     def _fetch_url(self, url: str):
         response = requests.get(url, stream=True, timeout=15)
