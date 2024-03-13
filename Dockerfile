@@ -3,8 +3,8 @@ FROM python:3.12 as builder
 
 WORKDIR /app
 
-RUN python -m venv venv
-ENV PATH="/venv/bin:$PATH"
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
@@ -14,7 +14,7 @@ FROM python:3.12-alpine
 
 WORKDIR /app
 
-ENV PATH="/venv/bin:$PATH"
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-COPY --from=builder venv venv
 COPY . .
