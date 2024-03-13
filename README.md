@@ -60,13 +60,14 @@ Here's what each variable in the `.env` file represents:
 
 - `DATABASE_URL`: The URL of your mongodb database.
 - `PORT`: The port number on which the Flask application will run.
+- `SECRET_KEY`: Flask application secret key.
 - `FACTORIO_USERNAME`: Your Factorio username.
 - `FACTORIO_TOKEN`: Your Factorio token.
 - `USERNAME`: The username for the Flask-MonitoringDashboard.
 - `PASSWORD`: The password for the Flask-MonitoringDashboard.
 - `SECURITY_TOKEN`: The security token for the Flask-MonitoringDashboard.
 
-## Running the Application
+## Running the Application (Development)
 
 You can start the scheduled task or run the Flask application in debug mode:
 
@@ -78,10 +79,12 @@ You can start the scheduled task or run the Flask application in debug mode:
     ```bash
     python app.py
     ```
-- Run Protocol:
+- Run the protocol:
     ```bash
     python -m protocol.BeamMP
     ```
+
+---
 
 ## Self-Hosting
 
@@ -119,7 +122,7 @@ You can use Docker Compose to self-host the application. Here's how:
         restart: always
     ```
 
-3. Create a `.env` file as stated in the Configuration section.
+3. Create a `.env` file as stated in the [Configuration](#configuration) section.
 
 4. Run the following command to start the application:
 
