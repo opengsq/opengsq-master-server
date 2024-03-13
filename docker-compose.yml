@@ -13,7 +13,7 @@ services:
       - ${PORT}:8000
     restart: always
     volumes:
-      - ./data:/data
+      - ./data:/app/data
 
   schedule:
     build: .
