@@ -1,3 +1,4 @@
+import os
 from flask import Flask, abort, request, jsonify
 from flasgger import Swagger
 import flask_monitoringdashboard as dashboard
@@ -9,6 +10,7 @@ from protocols import MasterServer, BeamMP, Factorio, Palworld, Scum
 from version import __version__
 
 app = Flask(__name__)
+app.secret_key = os.getenv('SECRET_KEY', '')
 
 swagger_config = {
     "headers": [],
