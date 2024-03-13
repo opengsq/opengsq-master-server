@@ -9,6 +9,8 @@ from protocols.MasterServer import MasterServer
 class Palworld(MasterServer):
     def __init__(self) -> None:
         super().__init__('Palworld')
+
+    def create_index(self):
         self.collection.create_index('server_id')
         self.collection.create_index({'address': 1, 'port': 1})
 

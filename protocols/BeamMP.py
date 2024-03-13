@@ -7,6 +7,8 @@ from protocols.MasterServer import MasterServer
 class BeamMP(MasterServer):
     def __init__(self) -> None:
         super().__init__('BeamMP')
+
+    def create_index(self):
         self.collection.create_index({'ip': 1, 'port': 1})
 
     def job(self):

@@ -11,6 +11,9 @@ from tqdm import tqdm
 
 load_dotenv()
 
+uri = os.getenv('DATABASE_URL')
+client = MongoClient(uri)
+
 
 class MasterServer(ABC):
     def __init__(self, key: str) -> None:
@@ -20,14 +23,16 @@ class MasterServer(ABC):
 
     @staticmethod
     def get_db():
-        uri = os.getenv('DATABASE_URL')
-        client = MongoClient(uri)
         db = client['MasterServer']
         return db
 
     @property
     def key(self):
         return self._key
+
+    @abstractmethod
+    def create_index(self):
+        pass
 
     @abstractmethod
     def job(self):

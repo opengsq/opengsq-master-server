@@ -8,6 +8,8 @@ from protocols.MasterServer import MasterServer
 class Factorio(MasterServer):
     def __init__(self) -> None:
         super().__init__('Factorio')
+
+    def create_index(self):
         self.collection.create_index('server_id')
         self.collection.create_index('host_address')
 

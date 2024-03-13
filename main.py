@@ -2,7 +2,7 @@ from threading import Thread
 import time
 import schedule
 
-from protocols import MasterServer, BeamMP, Factorio, Palworld, Scum
+from protocols import MasterServer
 
 threads: dict[str, Thread] = {}
 
@@ -13,10 +13,14 @@ def run_threaded(master_server: MasterServer):
         threads[master_server.key].start()
 
 
-schedule.every(5).minutes.do(run_threaded, BeamMP()).run()
-schedule.every(5).minutes.do(run_threaded, Factorio()).run()
-schedule.every(5).minutes.do(run_threaded, Palworld()).run()
-schedule.every(5).minutes.do(run_threaded, Scum()).run()
+for Protocol in MasterServer.__subclasses__():
+    protocol = Protocol()
+
+    # Creates an index on protocol collection.
+    protocol.create_index()
+
+    # Create a schedule task
+    schedule.every(5).minutes.do(run_threaded, protocol).run()
 
 for job in schedule.get_jobs():
     print(f"Job: {job}, Next run: {job.next_run}, Period: {job.period}")
