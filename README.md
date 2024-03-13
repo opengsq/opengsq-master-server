@@ -32,10 +32,6 @@ This project is licensed under the MIT License.
 
 ---
 
-# OpenGSQ Master Server
-
-This project provides a self-hosted master server solution for your game servers.
-
 ## Development Setup
 
 Follow these steps to set up your development environment:
@@ -116,7 +112,7 @@ You can use Docker Compose to self-host the application. Here's how:
 
       schedule:
         image: opengsq/opengsq-master-server:latest
-        command: python -u main.py
+        command: python main.py
         container_name: opengsq-master-server-schedule
         env_file:
           - .env
