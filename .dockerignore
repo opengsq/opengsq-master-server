@@ -5,6 +5,9 @@
 # Ignore all markdown files (README.md, etc.)
 *.md
 
+# But do not ignore terms.md
+!terms.md
+
 # Ignore all log files
 *.log
 
