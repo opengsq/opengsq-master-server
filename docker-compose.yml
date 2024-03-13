@@ -13,7 +13,7 @@ services:
       - ${PORT}:8000
     restart: always
     volumes:
-      - ./flask_monitoringdashboard.db:/flask_monitoringdashboard.db
+      - ./data:/data
 
   schedule:
     build: .
