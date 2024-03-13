@@ -1,8 +1,10 @@
 from flask import Flask, abort, request, jsonify
 from flasgger import Swagger
+import flask_monitoringdashboard as dashboard
 
 import markdown
 
+from config import build_config_file
 from protocols import MasterServer, BeamMP, Factorio, Palworld, Scum
 from version import __version__
 
@@ -199,6 +201,10 @@ def render_stats():
 
     return collection_counts
 
+
+build_config_file()
+dashboard.config.init_from(file='config.cfg')
+dashboard.bind(app)
 
 if __name__ == '__main__':
     app.run(debug=True)

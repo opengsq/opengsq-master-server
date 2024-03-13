@@ -12,6 +12,8 @@ services:
     ports:
       - ${PORT}:8000
     restart: always
+    volumes:
+      - flask_monitoringdashboard.db:flask_monitoringdashboard.db
 
   schedule:
     build: .

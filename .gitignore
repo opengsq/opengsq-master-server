@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Flask-MonitoringDashboard
+config.cfg
+flask_monitoringdashboard.db
