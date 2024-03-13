@@ -1,4 +1,3 @@
-from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from datetime import datetime, timezone
 from pymongo import UpdateOne
 from tqdm import tqdm
@@ -60,29 +59,15 @@ class Palworld(MasterServer):
 
     def _fetch_until_empty(self):
         servers = []
-        stop = False
-        pbar = tqdm(total=0, desc=f'[{self.key}] Fetch Page')
+        pbar = tqdm(total=1, desc=f'[{self.key}] Fetch Page')
 
-        with ThreadPoolExecutor() as executor:
-            futures = {executor.submit(self._fetch_page, pbar.total + 1)}
+        while pbar.n < pbar.total:
+            if server_list := self._fetch_page(pbar.total):
+                servers.extend(server_list)
+                pbar.total += 1
 
-            while futures:
-                done, futures = wait(futures, return_when=FIRST_COMPLETED)
-
-                for future in done:
-                    server_list = future.result()
-
-                    if server_list:
-                        servers.extend(server_list)
-                        pbar.update(1)
-                    else:
-                        stop = True
-
-                    if not stop:
-                        pbar.total += 1
-                        pbar.refresh()
-                        futures.add(executor.submit(
-                            self._fetch_page, pbar.total + 1))
+            pbar.update(1)
+            pbar.refresh()
 
         return servers
 
