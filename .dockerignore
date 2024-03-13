@@ -1,0 +1,24 @@
+# Ignore Git and GitHub files
+.git
+.github
+
+# Ignore all markdown files (README.md, etc.)
+*.md
+
+# Ignore all log files
+*.log
+
+# Ignore Python cache files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Ignore Python virtual environment files
+venv
+env/
+
+# Ignore common database files
+*.sql
+*.sqlite
