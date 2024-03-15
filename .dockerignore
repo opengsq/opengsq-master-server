@@ -8,6 +8,9 @@
 # But do not ignore terms.md
 !terms.md
 
+# Ignore all tests files
+tests/
+
 # Ignore all log files
 *.log
 
