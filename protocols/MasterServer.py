@@ -68,16 +68,13 @@ class MasterServer(ABC):
         with tqdm(total=total_size, unit="B", unit_scale=True, unit_divisor=1024, desc=desc) as pbar:
             for chunk in response.iter_content(chunk_size=1024):
                 if chunk:
-                    data += chunk
+                    data += bytes(chunk)
                     pbar.update(len(chunk))
 
         # Convert bytes to string
         str_data = data.decode('utf-8')
 
-        # Convert string to JSON
-        json_data = json.loads(str_data)
-
-        return json_data
+        return str_data
 
     def _bulk_write(self, updates: list):
         # Chunk size for bulk write

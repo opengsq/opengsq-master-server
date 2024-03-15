@@ -1,3 +1,4 @@
+import json
 import os
 from datetime import datetime, timezone
 from pymongo import UpdateOne
@@ -41,13 +42,16 @@ class Factorio(MasterServer):
         url = f"https://multiplayer.factorio.com/get-games?username={username}&token={token}"
         data = self._fetch_url(url)
 
-        if "message" in data:
+        # Convert string to JSON
+        res = json.loads(data)
+
+        if "message" in res:
             # Possible error messages
             # 1. User not found.        -> Invalid FACTORIO_USERNAME
             # 2. Token doesn't match.   -> Invalid FACTORIO_TOKEN
-            raise LookupError(data["message"])
+            raise LookupError(res["message"])
 
-        return data
+        return res
 
     def _upsert_bulk_write(self, server_list: list):
         # Prepare the updates
