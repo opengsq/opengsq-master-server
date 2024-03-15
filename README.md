@@ -13,6 +13,7 @@ The application provides the following endpoints:
 
 - `/beammp/search?host=<host>&port=<port>`
 - `/factorio/search?host=<host>&port=<port>`
+- `/front/search?host=<host>&port=<port>`
 - `/palworld/search?host=<host>&port=<port>`
 - `/scum/search?host=<host>&port=<port>`
 
@@ -58,14 +59,16 @@ cp .env.example .env
 
 Here's what each variable in the `.env` file represents:
 
-- `DATABASE_URL`: The URL of your mongodb database.
-- `PORT`: The port number on which the Flask application will run.
-- `SECRET_KEY`: Flask application secret key.
-- `FACTORIO_USERNAME`: Your Factorio username.
-- `FACTORIO_TOKEN`: Your Factorio token.
-- `USERNAME`: The username for the Flask-MonitoringDashboard.
-- `PASSWORD`: The password for the Flask-MonitoringDashboard.
-- `SECURITY_TOKEN`: The security token for the Flask-MonitoringDashboard.
+| Variable | Description |
+| --- | --- |
+| `DATABASE_URL` | The URL of your mongodb database. |
+| `PORT` | The port number on which the Flask application will run. |
+| `SECRET_KEY` | Flask application secret key. |
+| `FACTORIO_USERNAME` | Your Factorio username. |
+| `FACTORIO_TOKEN` | Your Factorio token. |
+| `USERNAME` | The username for the Flask-MonitoringDashboard. |
+| `PASSWORD` | The password for the Flask-MonitoringDashboard. |
+| `SECURITY_TOKEN` | The security token for the Flask-MonitoringDashboard. |
 
 ## Running the Application (Development)
 
