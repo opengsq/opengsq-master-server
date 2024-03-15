@@ -90,8 +90,9 @@ class MasterServer(ABC):
         chunk_size = -(-len(updates) // max_workers)
 
         # Split the updates into chunks for each worker
-        update_chunks = [updates[i:i + chunk_size]
-                        for i in range(0, len(updates), chunk_size)]
+        update_chunks = [
+            updates[i:i + chunk_size]
+            for i in range(0, len(updates), chunk_size)]
 
         # Initialize a progress bar for tracking the progress of the bulk write
         pbar = tqdm(total=len(updates), desc=f"[{self.key}] Bulk Write")

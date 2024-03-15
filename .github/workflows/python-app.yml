@@ -39,3 +39,5 @@ jobs:
         pytest
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        FACTORIO_USERNAME: ${{ secrets.FACTORIO_USERNAME }}
+        FACTORIO_TOKEN: ${{ secrets.FACTORIO_TOKEN }}
