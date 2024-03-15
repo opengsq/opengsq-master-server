@@ -72,7 +72,7 @@ class Scum(MasterServer):
 
                 return servers
 
-        raise Exception(f"All master server addresses are unreachable")
+        raise Exception("All master server addresses are unreachable")
 
     def _parse_server(self, data: bytes):
         result = self.__SERVER_INFO_STRUCT.unpack(data)

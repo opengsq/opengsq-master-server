@@ -39,6 +39,12 @@ class Factorio(MasterServer):
     def _fetch(self) -> list:
         username = os.getenv("FACTORIO_USERNAME")
         token = os.getenv("FACTORIO_TOKEN")
+
+        # Check if username or token is None or empty string
+        if not username or not token:
+            print("Warning: FACTORIO_USERNAME or FACTORIO_TOKEN is not set or empty.")
+            return []
+
         url = f"https://multiplayer.factorio.com/get-games?username={username}&token={token}"
         data = self._fetch_url(url)
 

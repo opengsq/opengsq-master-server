@@ -1,6 +1,8 @@
 # OpenGSQ Master Server Search API
 
+[![Python application](https://github.com/opengsq/opengsq-master-server/actions/workflows/python-app.yml/badge.svg)](https://github.com/opengsq/opengsq-master-server/actions/workflows/python-app.yml)
 [![Docker Image CI](https://github.com/opengsq/opengsq-master-server/actions/workflows/docker-image.yml/badge.svg)](https://github.com/opengsq/opengsq-master-server/actions/workflows/docker-image.yml)
+[![GitHub release](https://img.shields.io/github/release/opengsq/opengsq-master-server)](https://github.com/opengsq/opengsq-master-server/releases/)
 [![GitHub license](https://img.shields.io/github/license/opengsq/opengsq-master-server)](https://github.com/opengsq/opengsq-master-server/blob/main/LICENSE)
 
 This is an application that provides an API for searching game servers. The application supports the following games: BeamMP, Factorio, Palworld, and Scum.
@@ -91,43 +93,13 @@ You can start the scheduled task or run the Flask application in debug mode:
 
 ## Self-Hosting
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/opengsq/opengsq-master-server.svg)](https://hub.docker.com/r/opengsq/opengsq-master-server)
+
 You can use Docker Compose to self-host the application. Here's how:
 
-1. Ensure that you have the following file structure:
-    - `docker-compose.yml`
-    - `.env`
+1. Create a `docker-compose.yml` file [docker-compose.yml example](/docker-compose.prod.yml)
 
-2. Create a `docker-compose.yml` file with the following content:
-
-    ```yml
-    version: '3.8'
-    services:
-      flask:
-        image: opengsq/opengsq-master-server:latest
-        command: gunicorn -w 4 -b :8000 app:app
-        container_name: opengsq-master-server-flask
-        environment:
-          - FLASK_ENV=production
-        env_file:
-          - .env
-        ports:
-          - ${PORT}:8000
-        restart: always
-        volumes:
-          - ./data:/app/data
-
-      schedule:
-        image: opengsq/opengsq-master-server:latest
-        command: python main.py
-        container_name: opengsq-master-server-schedule
-        env_file:
-          - .env
-        restart: always
-    ```
-
-3. Create a `.env` file as stated in the [Configuration](#configuration) section.
-
-4. Run the following command to start the application:
+2. Run the following command to start the application:
 
     ```bash
     docker-compose up -d

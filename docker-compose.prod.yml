@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  mongodb:
+    container_name: opengsq-master-server-mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+    expose:
+      - 27017
+    image: mongo:latest
+    volumes:
+      - ./mongodb_data:/data/db
+
+  flask:
+    command: gunicorn -w 4 -b :8000 app:app
+    container_name: opengsq-master-server-flask
+    depends_on:
+      - mongodb
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URL=mongodb://mongodb:27017/
+      - PORT=8000
+      - USERNAME=admin
+      - PASSWORD=admin
+      - SECURITY_TOKEN=cc83733cb0af8b884ff6577086b87909
+    image: opengsq/opengsq-master-server:latest
+    ports:
+      - ${PORT}:8000
+    restart: always
+    volumes:
+      - ./data:/app/data
+
+  schedule:
+    command: python main.py
+    container_name: opengsq-master-server-schedule
+    depends_on:
+      - mongodb
+    environment:
+      - DATABASE_URL=mongodb://mongodb:27017/
+      - FACTORIO_USERNAME=
+      - FACTORIO_TOKEN=
+    image: opengsq/opengsq-master-server:latest
+    restart: always

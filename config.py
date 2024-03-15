@@ -41,7 +41,6 @@ def build_config_file():
             config[section][option] = os.getenv(
                 option, config.get(section, option))
 
-
     overwrite('authentication', ['USERNAME', 'PASSWORD', 'SECURITY_TOKEN'])
 
     # Update the app version

@@ -35,7 +35,7 @@ class Front(MasterServer):
         return result
 
     def _fetch(self) -> list:
-        url = f'https://privatelist.playthefront.com/private_list'
+        url = 'https://privatelist.playthefront.com/private_list'
         data = self._fetch_url(url)
 
         # Convert string to JSON
