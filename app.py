@@ -112,34 +112,6 @@ def factorio_search():
     return search(request.args, Factorio())
 
 
-@app.route('/thefront/search', methods=['GET'])
-def front_search():
-    """
-    Front Search
-    This endpoint allows you to search for a The Front server using its host and port.
-    ---
-    tags:
-      - Search EndPoint
-    parameters:
-      - name: host
-        in: query
-        type: string
-        required: true
-      - name: port
-        in: query
-        type: integer
-        required: true
-    responses:
-      200:
-        description: Success
-      400:
-        description: Invalid parameters were supplied. 'host' and 'port' must be provided, and 'port' must be an integer.
-      404:
-        description: No server was found with the provided host and port.
-    """
-    return search(request.args, TheFront())
-
-
 @app.route('/palworld/search', methods=['GET'])
 def palworld_search():
     """
@@ -194,6 +166,34 @@ def scum_search():
         description: No server was found with the provided host and port.
     """
     return search(request.args, Scum())
+
+
+@app.route('/thefront/search', methods=['GET'])
+def thefront_search():
+    """
+    Front Search
+    This endpoint allows you to search for a The Front server using its host and port.
+    ---
+    tags:
+      - Search EndPoint
+    parameters:
+      - name: host
+        in: query
+        type: string
+        required: true
+      - name: port
+        in: query
+        type: integer
+        required: true
+    responses:
+      200:
+        description: Success
+      400:
+        description: Invalid parameters were supplied. 'host' and 'port' must be provided, and 'port' must be an integer.
+      404:
+        description: No server was found with the provided host and port.
+    """
+    return search(request.args, TheFront())
 
 
 @app.route("/terms")
