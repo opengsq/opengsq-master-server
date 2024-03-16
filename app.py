@@ -6,7 +6,7 @@ import flask_monitoringdashboard as dashboard
 import markdown
 
 from config import build_config_file
-from protocols import MasterServer, BeamMP, Factorio, Front, Palworld, Scum
+from protocols import MasterServer, BeamMP, Factorio, Palworld, Scum, TheFront
 from version import __version__
 
 app = Flask(__name__)
@@ -112,11 +112,11 @@ def factorio_search():
     return search(request.args, Factorio())
 
 
-@app.route('/front/search', methods=['GET'])
+@app.route('/thefront/search', methods=['GET'])
 def front_search():
     """
     Front Search
-    This endpoint allows you to search for a Front server using its host and port.
+    This endpoint allows you to search for a The Front server using its host and port.
     ---
     tags:
       - Search EndPoint
@@ -137,7 +137,7 @@ def front_search():
       404:
         description: No server was found with the provided host and port.
     """
-    return search(request.args, Front())
+    return search(request.args, TheFront())
 
 
 @app.route('/palworld/search', methods=['GET'])

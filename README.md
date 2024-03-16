@@ -5,7 +5,7 @@
 [![GitHub release](https://img.shields.io/github/release/opengsq/opengsq-master-server)](https://github.com/opengsq/opengsq-master-server/releases/)
 [![GitHub license](https://img.shields.io/github/license/opengsq/opengsq-master-server)](https://github.com/opengsq/opengsq-master-server/blob/main/LICENSE)
 
-This is an application that provides an API for searching game servers. The application supports the following games: BeamMP, Factorio, Palworld, and Scum.
+This is an application that provides an API for searching game servers. The application supports the following games: BeamMP, Factorio, Palworld, Scum and The Front.
 
 Try now: https://master-server.opengsq.com
 
@@ -15,9 +15,9 @@ The application provides the following endpoints:
 
 - `/beammp/search?host=<host>&port=<port>`
 - `/factorio/search?host=<host>&port=<port>`
-- `/front/search?host=<host>&port=<port>`
 - `/palworld/search?host=<host>&port=<port>`
 - `/scum/search?host=<host>&port=<port>`
+- `/thefront/search?host=<host>&port=<port>`
 
 Replace `<host>` and `<port>` with the host and port of the game server you want to search.
 
@@ -61,16 +61,18 @@ cp .env.example .env
 
 Here's what each variable in the `.env` file represents:
 
-| Variable | Description |
-| --- | --- |
-| `DATABASE_URL` | The URL of your mongodb database. |
-| `PORT` | The port number on which the Flask application will run. |
-| `SECRET_KEY` | Flask application secret key. |
-| `FACTORIO_USERNAME` | Your Factorio username. |
-| `FACTORIO_TOKEN` | Your Factorio token. |
-| `USERNAME` | The username for the Flask-MonitoringDashboard. |
-| `PASSWORD` | The password for the Flask-MonitoringDashboard. |
-| `SECURITY_TOKEN` | The security token for the Flask-MonitoringDashboard. |
+| Variable | Description | Default Value | Best Practice |
+| --- | --- | --- | --- |
+| `DATABASE_URL` | The URL of your MongoDB database. | None | This is required. Make sure to keep this value secure and do not share it publicly. |
+| `PORT` | The port number on which the Flask application will run. | `8000` | Choose a port that is not being used by other services. |
+| `SECRET_KEY` | Flask application secret key. | None | This should be a random string. It is used for session management in Flask. Keep this value secure. |
+| `USERNAME` | The username for Flask-MonitoringDashboard. | `admin` | Change this to a unique username. |
+| `PASSWORD` | The password for Flask-MonitoringDashboard. | `admin` | Change this to a strong, unique password. |
+| `SECURITY_TOKEN` | The security token for Flask-MonitoringDashboard. | `cc83733cb0af8b884ff6577086b87909` | This should be a random string. Keep this value secure. |
+| `FACTORIO_USERNAME` | The username for Factorio. | None | Set this to your Factorio username. |
+| `FACTORIO_TOKEN` | The token for Factorio. | None | This should be your Factorio token. Keep this value secure. |
+
+Remember, it's important to keep all sensitive information such as `DATABASE_URL`, `SECRET_KEY`, `PASSWORD`, `SECURITY_TOKEN`, and `FACTORIO_TOKEN` secure and not to share them publicly or commit them to version control. It's a good practice to use environment variables or a secure method to store these values.
 
 ## Running the Application (Development)
 

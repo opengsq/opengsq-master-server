@@ -5,9 +5,9 @@ from pymongo import UpdateOne
 from protocols.MasterServer import MasterServer
 
 
-class Front(MasterServer):
+class TheFront(MasterServer):
     def __init__(self) -> None:
-        super().__init__('Front')
+        super().__init__('TheFront')
 
     def create_index(self):
         self.collection.create_index({'addr': 1, 'port': 1})
@@ -75,7 +75,7 @@ class Front(MasterServer):
 
 
 if __name__ == "__main__":
-    front = Front()
-    # front.job()
-    server = front.find(host='45.137.244.52', port=28100)
+    the_front = TheFront()
+    # the_front.job()
+    server = the_front.find(host='45.137.244.52', port=28100)
     print(server)

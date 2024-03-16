@@ -1,11 +1,11 @@
 import pytest
 
-from protocols import MasterServer, Front
+from protocols import MasterServer, TheFront
 
 
 @pytest.fixture
 def instance():
-    return Front()
+    return TheFront()
 
 
 def test_job(instance: MasterServer):
