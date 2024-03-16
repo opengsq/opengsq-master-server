@@ -171,7 +171,7 @@ def scum_search():
 @app.route('/thefront/search', methods=['GET'])
 def thefront_search():
     """
-    Front Search
+    The Front Search
     This endpoint allows you to search for a The Front server using its host and port.
     ---
     tags:
