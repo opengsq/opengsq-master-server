@@ -3,6 +3,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 import os
 import time
+from typing import Optional
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import requests
@@ -38,7 +39,7 @@ class MasterServer(ABC):
         pass
 
     @abstractmethod
-    def find(self, *, host: str, port: int) -> dict:
+    def find(self, *, host: str, port: int) -> Optional[dict]:
         pass
 
     def run(self):
