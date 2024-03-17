@@ -62,7 +62,7 @@ class Factorio(MasterServer):
         # Prepare the updates
         updates = [
             UpdateOne(
-                {'host_address': server_list['host_address']},
+                {'host_address': server['host_address']},
                 {
                     '$set': server,
                     '$currentDate': {'_last_modified': True},
