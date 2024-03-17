@@ -11,7 +11,6 @@ class Factorio(MasterServer):
         super().__init__('Factorio')
 
     def create_index(self):
-        self.collection.create_index('server_id')
         self.collection.create_index('host_address')
 
     def job(self):
@@ -63,7 +62,7 @@ class Factorio(MasterServer):
         # Prepare the updates
         updates = [
             UpdateOne(
-                {'server_id': server['server_id']},
+                {'host_address': server_list['host_address']},
                 {
                     '$set': server,
                     '$currentDate': {'_last_modified': True},
