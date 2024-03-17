@@ -104,5 +104,5 @@ You can use Docker Compose to self-host the application. Here's how:
 2. Run the following command to start the application:
 
     ```bash
-    docker-compose up -d
+    docker compose up -d
     ```
