@@ -2,7 +2,7 @@ flasgger==0.9.7.1
 Flask==3.0.2
 Flask_MonitoringDashboard==3.3.0
 gunicorn==21.2.0
-Markdown==3.5.2
+Markdown==3.6
 pymongo==4.6.2
 python-dotenv==1.0.1
 requests==2.31.0
